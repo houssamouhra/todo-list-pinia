@@ -11,7 +11,6 @@ import { ref } from "vue";
 import { useTodoListStore } from "@/stores/todoList";
 
 const todo = ref("");
-
 const store = useTodoListStore();
 
 function addItemAndClear(item) {

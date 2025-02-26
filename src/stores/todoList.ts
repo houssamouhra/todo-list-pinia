@@ -1,24 +1,26 @@
 import { defineStore } from "pinia";
+import { ref } from "vue";
 
-export const useTodoListStore = defineStore("todoList", {
-  state: () => ({
-    todoList: [],
-    id: 0,
-  }),
-  actions: {
-    addTodo(item) {
-      this.todoList.push({ item, id: this.id++, completed: false });
-    },
-    deleteTodo(itemId) {
-      this.todoList = this.todoList.filter((object) => {
-        return object.id !== itemId;
-      });
-    },
-    toggleCompleted(idToFind) {
-      const todo = this.todoList.find((obj) => obj.id === idToFind);
-      if (todo) {
-        todo.completed = !todo.completed;
-      }
-    },
-  },
+export const useTodoListStore = defineStore("todoList", () => {
+  const todoList = ref([]);
+  const id = ref(0);
+
+  const addTodo = (item) => {
+    todoList.value.push({ item, id: id.value++, completed: false });
+  };
+
+  const deleteTodo = (itemId) => {
+    todoList.value = todoList.value.filter((object) => {
+      return object.id !== itemId;
+    });
+  };
+
+  const toggleCompleted = (idToFind) => {
+    const todo = todoList.value.find((obj) => obj.id === idToFind);
+    if (todo) {
+      todo.completed = !todo.completed;
+    }
+  };
+
+  return { todoList, id, addTodo, deleteTodo, toggleCompleted };
 });
